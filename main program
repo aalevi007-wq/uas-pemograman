@@ -1,0 +1,102 @@
+
+# ==================== MAIN PROGRAM ====================
+def main():
+    process = MahasiswaProcess()
+    view = MahasiswaView()
+    validator = InputValidator()
+    
+    view.tampilkan_header()
+    
+    while True:
+        view.tampilkan_menu()
+        
+        try:
+            pilihan = input("Pilih menu (1-6): ").strip()
+            
+            if pilihan == "1":
+                # Tambah Data
+                print("\n--- TAMBAH DATA MAHASISWA ---")
+                try:
+                    nim = validator.validasi_nim(input("NIM: "))
+                    nama = validator.validasi_nama(input("Nama: "))
+                    jurusan = validator.validasi_jurusan(input("Jurusan: "))
+                    ipk = validator.validasi_ipk(input("IPK: "))
+                    
+                    mahasiswa = Mahasiswa(nim, nama, jurusan, ipk)
+                    process.tambah_mahasiswa(mahasiswa)
+                    view.tampilkan_pesan("Data mahasiswa berhasil ditambahkan!", "sukses")
+                    
+                except ValueError as e:
+                    view.tampilkan_pesan(str(e), "error")
+            
+            elif pilihan == "2":
+                # Tampilkan Semua Data
+                view.tampilkan_tabel(process.get_all_mahasiswa())
+            
+            elif pilihan == "3":
+                # Cari Mahasiswa
+                print("\n--- CARI MAHASISWA ---")
+                nim = input("Masukkan NIM: ").strip()
+                mahasiswa = process.cari_mahasiswa(nim)
+                view.tampilkan_detail(mahasiswa)
+            
+            elif pilihan == "4":
+                # Update Data
+                print("\n--- UPDATE DATA MAHASISWA ---")
+                try:
+                    nim = input("NIM mahasiswa yang akan diupdate: ").strip()
+                    
+                    # Cek apakah mahasiswa ada
+                    if not process.cari_mahasiswa(nim):
+                        raise ValueError(f"NIM {nim} tidak ditemukan!")
+                    
+                    print("Kosongkan jika tidak ingin mengubah")
+                    nama = input("Nama baru: ").strip()
+                    jurusan = input("Jurusan baru: ").strip()
+                    ipk_str = input("IPK baru: ").strip()
+                    
+                    ipk = None
+                    if ipk_str:
+                        ipk = validator.validasi_ipk(ipk_str)
+                    
+                    process.update_mahasiswa(nim, nama or None, jurusan or None, ipk)
+                    view.tampilkan_pesan("Data mahasiswa berhasil diupdate!", "sukses")
+                    
+                except ValueError as e:
+                    view.tampilkan_pesan(str(e), "error")
+            
+            elif pilihan == "5":
+                # Hapus Data
+                print("\n--- HAPUS DATA MAHASISWA ---")
+                try:
+                    nim = input("NIM mahasiswa yang akan dihapus: ").strip()
+                    konfirmasi = input(f"Yakin ingin menghapus NIM {nim}? (y/n): ").lower()
+                    
+                    if konfirmasi == 'y':
+                        process.hapus_mahasiswa(nim)
+                        view.tampilkan_pesan("Data mahasiswa berhasil dihapus!", "sukses")
+                    else:
+                        view.tampilkan_pesan("Penghapusan dibatalkan.")
+                        
+                except ValueError as e:
+                    view.tampilkan_pesan(str(e), "error")
+            
+            elif pilihan == "6":
+                # Keluar
+                print("\n" + "="*70)
+                print("Terima kasih telah menggunakan program ini!")
+                print("="*70)
+                break
+            
+            else:
+                view.tampilkan_pesan("Pilihan tidak valid! Pilih 1-6.", "error")
+        
+        except KeyboardInterrupt:
+            print("\n\nProgram dihentikan oleh user.")
+            break
+        except Exception as e:
+            view.tampilkan_pesan(f"Terjadi kesalahan: {str(e)}", "error")
+
+
+if __name__ == "__main__":
+    main()
