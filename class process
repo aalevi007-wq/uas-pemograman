@@ -1,0 +1,51 @@
+
+# ==================== CLASS PROCESS ====================
+class MahasiswaProcess:
+    """Class untuk mengelola proses bisnis data mahasiswa"""
+    
+    def __init__(self):
+        self.data_mahasiswa = []
+    
+    def tambah_mahasiswa(self, mahasiswa):
+        """Menambahkan data mahasiswa baru"""
+        # Validasi NIM tidak duplikat
+        if any(mhs.nim == mahasiswa.nim for mhs in self.data_mahasiswa):
+            raise ValueError(f"NIM {mahasiswa.nim} sudah terdaftar!")
+        self.data_mahasiswa.append(mahasiswa)
+        return True
+    
+    def hapus_mahasiswa(self, nim):
+        """Menghapus data mahasiswa berdasarkan NIM"""
+        for i, mhs in enumerate(self.data_mahasiswa):
+            if mhs.nim == nim:
+                del self.data_mahasiswa[i]
+                return True
+        raise ValueError(f"NIM {nim} tidak ditemukan!")
+    
+    def update_mahasiswa(self, nim, nama=None, jurusan=None, ipk=None):
+        """Mengupdate data mahasiswa"""
+        for mhs in self.data_mahasiswa:
+            if mhs.nim == nim:
+                if nama:
+                    mhs.nama = nama
+                if jurusan:
+                    mhs.jurusan = jurusan
+                if ipk is not None:
+                    mhs.ipk = ipk
+                return True
+        raise ValueError(f"NIM {nim} tidak ditemukan!")
+    
+    def cari_mahasiswa(self, nim):
+        """Mencari mahasiswa berdasarkan NIM"""
+        for mhs in self.data_mahasiswa:
+            if mhs.nim == nim:
+                return mhs
+        return None
+    
+    def get_all_mahasiswa(self):
+        """Mendapatkan semua data mahasiswa"""
+        return self.data_mahasiswa
+
+
+"__main__":
+    main()
