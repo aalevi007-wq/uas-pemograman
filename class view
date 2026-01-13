@@ -1,0 +1,60 @@
+
+# ==================== CLASS VIEW ====================
+class MahasiswaView:
+    """Class untuk menampilkan data ke layar"""
+    
+    @staticmethod
+    def tampilkan_header():
+        print("\n" + "="*70)
+        print("          PROGRAM MANAJEMEN DATA MAHASISWA")
+        print("="*70)
+    
+    @staticmethod
+    def tampilkan_menu():
+        print("\n" + "-"*70)
+        print("MENU:")
+        print("1. Tambah Data Mahasiswa")
+        print("2. Tampilkan Semua Data")
+        print("3. Cari Mahasiswa")
+        print("4. Update Data Mahasiswa")
+        print("5. Hapus Data Mahasiswa")
+        print("6. Keluar")
+        print("-"*70)
+    
+    @staticmethod
+    def tampilkan_tabel(data_mahasiswa):
+        """Menampilkan data dalam bentuk tabel"""
+        if not data_mahasiswa:
+            print("\n⚠ Data mahasiswa kosong!")
+            return
+        
+        print("\n" + "="*70)
+        print(f"{'NIM':<15} {'NAMA':<20} {'JURUSAN':<20} {'IPK':<10}")
+        print("="*70)
+        for mhs in data_mahasiswa:
+            print(f"{mhs.nim:<15} {mhs.nama:<20} {mhs.jurusan:<20} {mhs.ipk:<10.2f}")
+        print("="*70)
+    
+    @staticmethod
+    def tampilkan_detail(mahasiswa):
+        """Menampilkan detail satu mahasiswa"""
+        if mahasiswa:
+            print("\n" + "-"*70)
+            print("DETAIL MAHASISWA:")
+            print(f"NIM     : {mahasiswa.nim}")
+            print(f"Nama    : {mahasiswa.nama}")
+            print(f"Jurusan : {mahasiswa.jurusan}")
+            print(f"IPK     : {mahasiswa.ipk:.2f}")
+            print("-"*70)
+        else:
+            print("\n⚠ Mahasiswa tidak ditemukan!")
+    
+    @staticmethod
+    def tampilkan_pesan(pesan, tipe="info"):
+        """Menampilkan pesan ke user"""
+        if tipe == "sukses":
+            print(f"\n✓ {pesan}")
+        elif tipe == "error":
+            print(f"\n✗ ERROR: {pesan}")
+        else:
+            print(f"\nℹ {pesan}")
