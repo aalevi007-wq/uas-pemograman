@@ -1,0 +1,12 @@
+# ==================== CLASS DATA ====================
+class Mahasiswa:
+    """Class untuk merepresentasikan data mahasiswa"""
+    
+    def __init__(self, nim, nama, jurusan, ipk):
+        self.nim = nim
+        self.nama = nama
+        self.jurusan = jurusan
+        self.ipk = ipk
+    
+    def __str__(self):
+        return f"NIM: {self.nim}, Nama: {self.nama}, Jurusan: {self.jurusan}, IPK: {self.ipk}"
