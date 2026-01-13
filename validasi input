@@ -1,0 +1,41 @@
+
+# ==================== VALIDASI INPUT ====================
+class InputValidator:
+    """Class untuk validasi input"""
+    
+    @staticmethod
+    def validasi_nim(nim):
+        """Validasi NIM harus berupa angka dan tidak kosong"""
+        if not nim:
+            raise ValueError("NIM tidak boleh kosong!")
+        if not nim.isdigit():
+            raise ValueError("NIM harus berupa angka!")
+        if len(nim) < 5:
+            raise ValueError("NIM minimal 5 digit!")
+        return nim
+    
+    @staticmethod
+    def validasi_nama(nama):
+        """Validasi nama tidak boleh kosong"""
+        if not nama or nama.strip() == "":
+            raise ValueError("Nama tidak boleh kosong!")
+        return nama.strip()
+    
+    @staticmethod
+    def validasi_jurusan(jurusan):
+        """Validasi jurusan tidak boleh kosong"""
+        if not jurusan or jurusan.strip() == "":
+            raise ValueError("Jurusan tidak boleh kosong!")
+        return jurusan.strip()
+    
+    @staticmethod
+    def validasi_ipk(ipk_str):
+        """Validasi IPK harus berupa angka antara 0-4"""
+        try:
+            ipk = float(ipk_str)
+            if ipk < 0 or ipk > 4:
+                raise ValueError("IPK harus antara 0.00 - 4.00!")
+            return ipk
+        except ValueError:
+            raise ValueError("IPK harus berupa angka!")
+
